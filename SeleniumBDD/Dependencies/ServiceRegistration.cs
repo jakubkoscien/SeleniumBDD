@@ -17,7 +17,8 @@ namespace SeleniumBDD.Dependencies
 
             // Read appsettings.json
             var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("Config\\appsettings.json")
                 .Build();
 
             // Register TestSettings
