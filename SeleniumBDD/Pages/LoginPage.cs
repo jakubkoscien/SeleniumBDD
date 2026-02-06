@@ -14,29 +14,33 @@ namespace SeleniumBDD.Pages
             _settings = settings;
         }
 
-        IWebElement EmailInput => Find(By.Id("formBasicEmail"));
-        IWebElement PasswordInput => Find(By.Id("formBasicPassword"));
-        IWebElement SignInButton => Find(By.CssSelector("button[type='submit']"));
-        //IWebElement EmptyCredentialsMessage => Find(By.XPath());
+        By EmailInput => By.Id("formBasicEmail");
+        By PasswordInput => By.Id("formBasicPassword");
+        By SignInButton => By.CssSelector("button[type='submit']");
+        By SuccessfulLoginMessage => By.CssSelector(".alert-success");
 
-        public void GoToLoginPage()
+        public void GoToLoginPage() => GoToUrl(_settings.BaseUrl + "practice-login-form");
+
+        public void ClickSignIn()
         {
-            GoToUrl(_settings.BaseUrl + "practice-login-form");
+            Click(SignInButton);
         }
 
-        public void EnterEmail(string email) => EnterText(EmailInput, email);
-
-        public void EnterPassword(string email) => EnterText(PasswordInput, email);
-
-        public void ClickSignIn() => SignInButton.Click();
+        public void EnterCredentials(string email, string password)
+        {
+            EnterText(EmailInput, email);
+            EnterText(PasswordInput, password);
+        }
 
         public void LoginAs(string email, string password)
         {
-            EnterEmail(email);
-            EnterPassword(password);
+            EnterCredentials(email, password);
             ClickSignIn();
         }
 
-
+        public bool IsLoginSuccessful()
+        {
+            return WaitUntilVisible(SuccessfulLoginMessage); 
+        }
     }
 }
