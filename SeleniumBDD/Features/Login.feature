@@ -1,10 +1,12 @@
 Feature: Login
+  Login page functionalities and interface tests
 
-Login page functionalities
+Scenario: Login with valid credentials
+    Given I am on the login page
+    When I enter valid credentials "<email>" and "<password>"
+    And I click the login button
+    Then I should see successful login message
 
-@mytag
-Scenario: Add two numbers
-	Given the first number is 50
-	And the second number is 70
-	When the two numbers are added
-	Then the result should be 120
+Examples: 
+  | email                | password |
+  | user@premiumbank.com | Bank@123 |
