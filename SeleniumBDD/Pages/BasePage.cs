@@ -19,30 +19,36 @@ namespace SeleniumBDD.Pages
             Wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
         }
 
+        private IWebElement Find(By locator)
+        {
+            return Wait.Until(driver => driver.FindElement(locator));
+        }
+
         protected void GoToUrl(string url)
         {
             Driver.Navigate().GoToUrl(url);
         }
 
-        protected IWebElement Find(By locator)
+        protected void EnterText(By locator, string text)
         {
-            return Wait.Until(driver => driver.FindElement(locator));
-        }
-
-        protected void EnterText(IWebElement element, string text)
-        {
+            var element = Find(locator);
             element.Clear();
             element.SendKeys(text);
         }
 
+        protected void Click(By locator)
+        {
+            MoveToElement(locator);
+            Driver.FindElement(locator).Click();
+        }
         protected void WaitUntilClickable(By locator)
         {
             Wait.Until(ExpectedConditions.ElementToBeClickable(locator));
         }
 
-        protected void WaitUntilVisible(By locator)
+        protected bool WaitUntilVisible(By locator)
         {             
-            Wait.Until(driver => driver.FindElement(locator).Displayed);
+            return Wait.Until(driver => driver.FindElement(locator).Displayed);
         }
 
         protected IWebElement MoveToElement(By locator)
