@@ -9,42 +9,41 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SeleniumBDD.Drivers
+namespace SeleniumBDD.Drivers;
+
+public interface IDriverFactory
 {
-    public interface IDriverFactory
+    IWebDriver Create();
+}
+
+public class DriverFactory : IDriverFactory
+{
+    private readonly TestSettings _settings;
+    public DriverFactory(TestSettings settings)
     {
-        IWebDriver Create();
+        _settings = settings;
     }
 
-    public class DriverFactory : IDriverFactory
+    public IWebDriver Create()
     {
-        private readonly TestSettings _settings;
-        public DriverFactory(TestSettings settings)
+        return _settings.Browser?.ToLower() switch
         {
-            _settings = settings;
-        }
+            "chrome" => CreateChrome(),
+            "firefox" => CreateFirefox(),
+            _ => throw new ArgumentException($"Unsupported browser: {_settings.Browser}")
+        };
+    }
 
-        public IWebDriver Create()
-        {
-            return _settings.Browser?.ToLower() switch
-            {
-                "chrome" => CreateChrome(),
-                "firefox" => CreateFirefox(),
-                _ => throw new ArgumentException($"Unsupported browser: {_settings.Browser}")
-            };
-        }
+    private IWebDriver CreateChrome()
+    {
+        var options = new ChromeOptions();
+        options.AddArgument("--start-maximized");
+        return new ChromeDriver(options);
+    }
 
-        private IWebDriver CreateChrome()
-        {
-            var options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            return new ChromeDriver(options);
-        }
-
-        private IWebDriver CreateFirefox()
-        {
-            var options = new FirefoxOptions();
-            return new FirefoxDriver(options);
-        }
+    private IWebDriver CreateFirefox()
+    {
+        var options = new FirefoxOptions();
+        return new FirefoxDriver(options);
     }
 }

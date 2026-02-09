@@ -6,16 +6,15 @@ using SeleniumBDD.Config;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Reqnroll.Microsoft.Extensions.DependencyInjection;
-namespace SeleniumBDD.DI
-{
+namespace SeleniumBDD.DI;
+
 	[Binding]
 	public class Hooks
 	{
-        [AfterScenario]
-        public void Cleanup(IWebDriver driver)
-        {
-            driver.Quit();
-        }
-
+    [AfterScenario]
+    public void Cleanup(IWebDriver driver)
+    {
+        driver.Quit();
     }
+
 }

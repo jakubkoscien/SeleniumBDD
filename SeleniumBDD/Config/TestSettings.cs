@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace SeleniumBDD.Config
+namespace SeleniumBDD.Config;
+
+public class TestSettings
 {
-    public class TestSettings
-    {
-        public string BaseUrl { get; set; }
-        public string Browser { get; set; }
-    }
+    public string BaseUrl { get; set; }
+    public string Browser { get; set; }
 }
