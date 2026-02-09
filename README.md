@@ -4,4 +4,5 @@ A lightweight portfolio project designed to demonstrate practical skills in buil
 ## 🛠 Technologie
 - C# / .NET
 - Selenium WebDriver
+- NUnit
 - Reqnroll (Gherkin)
