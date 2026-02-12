@@ -38,7 +38,7 @@ public class LoginSteps
     [Then("I should see successful login message")]
     public void ThenIShouldSeeSuccessfulLoginMessage()
     {
-        Assert.That(_loginPage.IsLoginSuccessful(), "Login was successful");
+        Assert.That(_loginPage.IsSuccessfulLoginMessageDisplayed(), "Login was successful");
     }
 
     [Then("I should see invalid credentials message")]
